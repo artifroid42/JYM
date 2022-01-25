@@ -8,8 +8,11 @@ using namespace std;
 #define GAMEMANAGER_H
 
 
+
 class GameManager
 {
+
+
 public:
     GameManager();
     void BoucleDeJeu();

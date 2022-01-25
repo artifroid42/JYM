@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     charactercontroller.cpp \
+    collider.cpp \
     displaymanager.cpp \
     dungeonmanager.cpp \
     ennemy.cpp \

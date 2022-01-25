@@ -6,6 +6,7 @@
 class Collider
 {
 public:
+    Collider();
     QVector2D vecPt1;
     QVector2D vecPt2;
 
