@@ -1,12 +1,13 @@
 #ifndef ENTITY_H
 #define ENTITY_H
-
+#include <collider.h>
 
 class Entity
 {
 
 public:
-    Entity();
+    Entity(QVector3D, QVector3D);
+    Collider collider;
     int x;
 };
 
