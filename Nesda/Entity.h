@@ -6,10 +6,11 @@ class Entity
 {
 
 public:
-    Entity(QVector3D, QVector3D, QVector3D);
+    Entity(QVector3D, QVector3D, QVector3D, QVector3D);
     Entity();
     Collider collider;
     QVector3D worldPosition;
+    QVector3D color;
 };
 
 #endif // ENTITY_H

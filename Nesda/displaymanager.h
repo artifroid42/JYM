@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 #include "windows.h"
 #include "entity.h"
+#include "player.h"
 #include "charactercontroller.h"
 #ifndef DISPLAYMANAGER_H
 #define DISPLAYMANAGER_H
@@ -35,7 +36,8 @@ private:
     float _X, _Y ,_Z; // Translation
     float x;
     float y;
-    Entity playerEntity;
+    Player player;
+    Entity wall;
     vector<Entity> v_entity;
     QPoint _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;

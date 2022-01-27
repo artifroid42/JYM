@@ -7,6 +7,7 @@
 #include <filesystem>
 #include "fstream"
 #include "iostream"
+#include "player.h"
 
 using namespace std;
 
@@ -16,9 +17,10 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     connect( &_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
     setMouseTracking(true);
-    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
-    playerEntity =  Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0));
-    characterController = CharacterController(playerEntity);
+//    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
+    player =  Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0), QVector3D(0, 1, 0));
+    wall =  Entity(QVector3D(2,3,0),QVector3D(0,0,0),QVector3D(2,2,0), QVector3D(1, 0, 0));
+    characterController = CharacterController(player);
 }
 
 void DisplayManager::initializeGL()
@@ -101,7 +103,8 @@ void DisplayManager::paintGL(){
         }
 
         //handle collisions
-
+        if(characterController.entity.collider.IsColliding(wall.collider))
+            cout<<"colliding";
 
         //apply movements
         characterController.applyMovements();
@@ -118,7 +121,7 @@ void DisplayManager::DrawSquare(Entity entity)
     //cout << "Je suis vivant" << endl;
 
     glBegin(GL_QUADS);
-        glColor3f(0,1,1); // Couleurs
+        glColor3f(entity.color.x(), entity.color.y(), entity.color.z()); // Couleurs
         glVertex3f(x,y,0);
         glVertex3f(x,y+entity.collider.localPt2.y(),0);
         glVertex3f(x+entity.collider.localPt2.x(),y+entity.collider.localPt2.y(),0);
