@@ -1,7 +1,10 @@
 #include <QGLWidget>
 #include <QtWidgets>
+#include <QWidget>
 #include <QTimer>
 #include <QOpenGLFunctions>
+#include <QKeyEvent>
+#include "windows.h"
 #ifndef DISPLAYMANAGER_H
 #define DISPLAYMANAGER_H
 
@@ -27,7 +30,8 @@ private:
 
     QTimer _timer; // To update the scene
     float _X, _Y ,_Z; // Translation
-
+    float x;
+    float y;
     QPoint _lastPosMouse; // To keep the last position of the mouse
 
 };

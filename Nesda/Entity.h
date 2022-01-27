@@ -8,6 +8,8 @@ class Entity
 public:
     Entity();
     int x;
+
+
 };
 
 #endif // ENTITY_H

@@ -6,17 +6,23 @@
 #include <iostream>
 #include <filesystem>
 #include "fstream"
+#include "iostream"
 
+using namespace std;
 
 DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0), _Z(-10)
 {
     // Update the scene
     connect( &_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
+    setMouseTracking(true);
+
 }
 
 void DisplayManager::initializeGL()
 {
+    x = 1;
+    y = 1;
     // background color
     glClearColor(0.07, 0.04, 0.02, 1);
 
@@ -41,6 +47,7 @@ void DisplayManager::paintGL(){
     // Rotation
     //glRotatef(0.f, 90.0f, 0.0, 0.0f);
 
+    /*
     glBegin(GL_TRIANGLES);
         glColor3f(1, 0 ,0);
         glVertex3f(-0.5,0.8,0);
@@ -59,7 +66,39 @@ void DisplayManager::paintGL(){
         glVertex3f(-0.5,0.8f,0);
         glVertex3f(0,0,0);
         glVertex3f(-1,0,0);
-    glEnd();
+    glEnd();*/
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,1);
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+1,0);
+        glVertex3f(x+1,y+1,0);
+        glVertex3f(x+1,y,0);
+        glEnd();
+        //std::cout << "oui" << endl;
+
+        if (GetKeyState('S') < 0) {
+            // The S key is down.
+            cout << "S est appuye" << endl;
+            y -= 0.01;
+        }
+        if (GetKeyState('Z') < 0) {
+            // The S key is down.
+            cout << "Z est appuye" << endl;
+            y += 0.01;
+        }
+        if (GetKeyState('Q') < 0) {
+            // The S key is down.
+            cout << "Q est appuye" << endl;
+            x -= 0.01;
+        }
+        if (GetKeyState('D') < 0) {
+            // The S key is down.
+            cout << "D est appuye" << endl;
+            x += 0.01;
+        }
+
+
 }
 
 void DisplayManager::resizeGL(int width, int height){
@@ -76,9 +115,11 @@ void DisplayManager::resizeGL(int width, int height){
 // When you click, the position of your mouse is saved
 void DisplayManager::mousePressEvent(QMouseEvent *event)
 {
+    cout << "Piou piou" << endl;
     if( event != NULL ) {
         _lastPosMouse = event->pos();
         // Do stuff
+        cout << "pos souris x : " << _lastPosMouse.x() << endl << "pos souris y : " << _lastPosMouse.y() << endl;
         updateGL();
     }
 }
@@ -89,6 +130,8 @@ void DisplayManager::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - _lastPosMouse.x();
     int dy = event->y() - _lastPosMouse.y();
 
+    cout << "Souris qui bouge sur x : " << dx << endl;
+    cout << "Souris qui bouge sur y : " << dy << endl;
     if( event != NULL )
     {
         // Do stuff

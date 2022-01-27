@@ -17,5 +17,7 @@ void GameManager::BoucleDeJeu()
 {
     cout << "player : " << player.x << endl;
     cout << "enemy : " << enemy.x << endl;
+
+
 }
 

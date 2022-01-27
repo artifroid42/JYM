@@ -5,9 +5,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
     GameManager gamemanager;
     gamemanager.BoucleDeJeu();
+
+    MainWindow w;
+    w.show();
+
     return a.exec();
 }
