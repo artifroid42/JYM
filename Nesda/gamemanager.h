@@ -16,8 +16,6 @@ class GameManager
 public:
     GameManager();
     void BoucleDeJeu();
-    Player player;
-    Enemy enemy;
 private :
 
 

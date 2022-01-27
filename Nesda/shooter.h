@@ -6,7 +6,7 @@
 class Shooter : public Entity
 {
 public:
-    Shooter(QVector3D, QVector3D);
+    Shooter(QVector3D, QVector3D, QVector3D);
     Shooter();
 };
 

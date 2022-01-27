@@ -6,6 +6,7 @@
 class Player : public Shooter
 {
 public:
+    Player(QVector3D, QVector3D, QVector3D);
     Player();
 };
 
