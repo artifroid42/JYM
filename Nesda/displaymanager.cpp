@@ -16,10 +16,9 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     connect( &_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
     setMouseTracking(true);
-
     v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
-
-
+    playerEntity =  Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0));
+    characterController = CharacterController(playerEntity);
 }
 
 void DisplayManager::initializeGL()
@@ -82,35 +81,36 @@ void DisplayManager::paintGL(){
     for (int i = 0; i < v_entity.size(); i++)
     {
         //cout << "vector size : " << v_entity.size() << endl;
-        DrawCaree(v_entity.at(i));
+        //DrawCaree(v_entity.at(i));
     }
 
+      DrawSquare(characterController.entity);
 
+        //inputs
         if (GetKeyState('S') < 0) {
-            // The S key is down.
-            cout << "S est appuye" << endl;
-            y -= 0.01;
+            characterController.direction.setY(-1);
         }
-        if (GetKeyState('Z') < 0) {
-            // The S key is down.
-            cout << "Z est appuye" << endl;
-            y += 0.01;
+        else if (GetKeyState('Z') < 0) {
+            characterController.direction.setY(1);
         }
         if (GetKeyState('Q') < 0) {
-            // The S key is down.
-            cout << "Q est appuye" << endl;
-            x -= 0.01;
+            characterController.direction.setX(-1);
         }
-        if (GetKeyState('D') < 0) {
-            // The S key is down.
-            cout << "D est appuye" << endl;
-            x += 0.01;
+        else if (GetKeyState('D') < 0) {
+            characterController.direction.setX(1);
         }
 
+        //handle collisions
 
+
+        //apply movements
+        characterController.applyMovements();
+
+        //end update loop
+        characterController.ResetDirection();
 }
 
-void DisplayManager::DrawCaree(Entity entity)
+void DisplayManager::DrawSquare(Entity entity)
 {
     x = entity.worldPosition.x() + entity.collider.localPt2.x();
     y = entity.worldPosition.y() + entity.collider.localPt2.y();
@@ -155,8 +155,8 @@ void DisplayManager::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - _lastPosMouse.x();
     int dy = event->y() - _lastPosMouse.y();
 
-    cout << "Souris qui bouge sur x : " << dx << endl;
-    cout << "Souris qui bouge sur y : " << dy << endl;
+//    cout << "Souris qui bouge sur x : " << dx << endl;
+//    cout << "Souris qui bouge sur y : " << dy << endl;
     if( event != NULL )
     {
         // Do stuff
