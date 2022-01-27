@@ -17,12 +17,13 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
     setMouseTracking(true);
 
+    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
+
+
 }
 
 void DisplayManager::initializeGL()
 {
-    x = 1;
-    y = 1;
     // background color
     glClearColor(0.07, 0.04, 0.02, 1);
 
@@ -68,6 +69,7 @@ void DisplayManager::paintGL(){
         glVertex3f(-1,0,0);
     glEnd();*/
 
+    /*
     glBegin(GL_QUADS);
         glColor3f(0,1,1);
         glVertex3f(x,y,0);
@@ -76,6 +78,13 @@ void DisplayManager::paintGL(){
         glVertex3f(x+1,y,0);
         glEnd();
         //std::cout << "oui" << endl;
+*/
+    for (int i = 0; i < v_entity.size(); i++)
+    {
+        //cout << "vector size : " << v_entity.size() << endl;
+        DrawCaree(v_entity.at(i));
+    }
+
 
         if (GetKeyState('S') < 0) {
             // The S key is down.
@@ -99,6 +108,22 @@ void DisplayManager::paintGL(){
         }
 
 
+}
+
+void DisplayManager::DrawCaree(Entity entity)
+{
+    x = entity.worldPosition.x() + entity.collider.localPt2.x();
+    y = entity.worldPosition.y() + entity.collider.localPt2.y();
+
+    //cout << "Je suis vivant" << endl;
+
+    glBegin(GL_QUADS);
+        glColor3f(0,1,1); // Couleurs
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+entity.collider.localPt2.y(),0);
+        glVertex3f(x+entity.collider.localPt2.x(),y+entity.collider.localPt2.y(),0);
+        glVertex3f(x+entity.collider.localPt2.x(),y,0);
+        glEnd();
 }
 
 void DisplayManager::resizeGL(int width, int height){
