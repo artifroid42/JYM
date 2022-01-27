@@ -7,15 +7,12 @@ using namespace std;
 
 GameManager::GameManager()
 {
-    player.x = 10;
-    enemy.x = 5;
-
+    Collider collider = Collider(QVector3D(0, 0, 0), QVector3D(0, 0, 0));
 
 }
 
 void GameManager::BoucleDeJeu()
 {
-    cout << "player : " << player.x << endl;
-    cout << "enemy : " << enemy.x << endl;
+
 }
 

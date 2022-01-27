@@ -2,5 +2,4 @@
 
 Player::Player()
 {
-    x = 2;
 }

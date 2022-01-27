@@ -7,6 +7,7 @@
 class Enemy : public Shooter
 {
 public:
+    Enemy(QVector3D, QVector3D);
     Enemy();
 };
 
