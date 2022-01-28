@@ -7,6 +7,13 @@ Collider::Collider(QVector3D pt1 , QVector3D pt2)
 {
     localPt1 = pt1;
     localPt2 = pt2;
+    IsCircle = false;
+}
+
+Collider::Collider(float a_radius)
+{
+    IsCircle = true;
+    Radius = a_radius;
 }
 
 bool Collider::IsColliding(Collider otherCollider)
@@ -21,8 +28,6 @@ bool Collider::IsColliding(Collider otherCollider)
     }
     return false;
 }
-
-
 
 bool Collider::AreSegmentsCrossing(QVector3D A, QVector3D B, QVector3D X, QVector3D Y)
 {

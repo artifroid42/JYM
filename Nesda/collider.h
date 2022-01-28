@@ -8,12 +8,17 @@ using namespace std;
 class Collider
 {
 public:
-    Collider(QVector3D, QVector3D);
+    Collider(QVector3D, QVector3D); // Rect
+    Collider(float); //Circle
     Collider();
     QVector3D localPt1;
     QVector3D localPt2;
     QVector3D worldPt1;
     QVector3D worldPt2;
+
+    bool IsCircle = false;
+    float Radius;
+
     bool IsColliding(Collider);
     bool AreSegmentsCrossing(QVector3D, QVector3D, QVector3D, QVector3D);
     vector<vector<QVector3D>> GetSides();

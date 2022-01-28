@@ -21,6 +21,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     player =  Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0), QVector3D(0, 1, 0));
     wall =  Entity(QVector3D(2,3,0),QVector3D(0,0,0),QVector3D(2,2,0), QVector3D(1, 0, 0));
     characterController = CharacterController(player);
+    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, QVector3D(1, 1, 1));
 }
 
 void DisplayManager::initializeGL()
@@ -88,6 +89,8 @@ void DisplayManager::paintGL(){
 
       DrawSquare(characterController.entity);
 
+      DrawCircle(ball);
+
         //inputs
         if (GetKeyState('S') < 0) {
             characterController.direction.setY(-1);
@@ -127,6 +130,21 @@ void DisplayManager::DrawSquare(Entity entity)
         glVertex3f(x+entity.collider.localPt2.x(),y+entity.collider.localPt2.y(),0);
         glVertex3f(x+entity.collider.localPt2.x(),y,0);
         glEnd();
+}
+
+void DisplayManager::DrawCircle(ProjectileBehaviour ball){
+    glColor3f(1.0, 1.0, 1.0);
+
+   glBegin(GL_TRIANGLE_FAN);
+
+   float cx = /*ball.worldPosition.x()*/0.5;
+   float cy = /*ball.worldPosition.y()*/0.5;
+   float radius = ball.collider.Radius;
+
+   glVertex2f(cx, cy); // Center
+   for(float i = 0.0f; i <= 360; i++)
+           glVertex2f(radius*cos(M_PI * i / 180.0) + cx, radius*sin(M_PI * i / 180.0) + cy);
+   glEnd();
 }
 
 void DisplayManager::resizeGL(int width, int height){

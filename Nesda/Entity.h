@@ -6,7 +6,8 @@ class Entity
 {
 
 public:
-    Entity(QVector3D, QVector3D, QVector3D, QVector3D);
+    Entity(QVector3D, QVector3D, QVector3D, QVector3D); // Rect
+    Entity(QVector3D, float, QVector3D); // Circle
     Entity();
     Collider collider;
     QVector3D worldPosition;

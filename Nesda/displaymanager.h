@@ -8,6 +8,7 @@
 #include "entity.h"
 #include "player.h"
 #include "charactercontroller.h"
+#include "projectilebehaviour.h"
 #ifndef DISPLAYMANAGER_H
 #define DISPLAYMANAGER_H
 
@@ -23,6 +24,7 @@ public:
     void paintGL(); // Display the scene Gl
     void resizeGL(int width, int height);
     void DrawSquare(Entity entity);
+    void DrawCircle(ProjectileBehaviour ball);
 
 protected:
     // Mouse Management
@@ -41,7 +43,7 @@ private:
     vector<Entity> v_entity;
     QPoint _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;
-
+    ProjectileBehaviour ball;
 };
 
 #endif // DISPLAYMANAGER_H
