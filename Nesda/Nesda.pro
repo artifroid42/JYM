@@ -21,7 +21,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
-    projectilebehavior.cpp \
+    projectilebehaviour.cpp \
     shooter.cpp
 
 HEADERS += \
@@ -34,7 +34,7 @@ HEADERS += \
     gamemanager.h \
     mainwindow.h \
     player.h \
-    projectilebehavior.h \
+    projectilebehaviour.h \
     shooter.h
 
 FORMS += \
