@@ -13,6 +13,7 @@ void CharacterController::applyMovements()
     if(direction.x() != 0 && direction.y() != 0)
         direction *= 0.7;
     entity.worldPosition += direction*speed;
+    entity.collider.SetWorldPosition(entity.worldPosition);
 }
 
 void CharacterController::ResetDirection()

@@ -4,7 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-    //TODO: collider.setWorldPosition at each movement
     QApplication a(argc, argv);
     GameManager gamemanager;
     gamemanager.BoucleDeJeu();
