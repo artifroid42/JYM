@@ -27,7 +27,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
     player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     characterController = CharacterController(player);
-    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, 0.1, QVector3D(1, 1, 1));
+    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.1, 0.1, QVector3D(1, 1, 1));
 }
 
 void DisplayManager::initializeGL()
@@ -67,26 +67,16 @@ void DisplayManager::paintGL(){
 
         //inputs
         if (GetKeyState('S') < 0) {
-            characterController.direction.setY(-1);
-            //ball.RectBounce(2);
-            ball.NormalBounce(QVector3D(0, -1, 0));
+            characterController.direction.setY(-1);        
         }
         else if (GetKeyState('Z') < 0) {
-            characterController.direction.setY(1);
-             //ball.RectBounce(0);
-            ball.NormalBounce(QVector3D(0, 1, 0));
+            characterController.direction.setY(1);          
         }
         if (GetKeyState('Q') < 0) {
-            characterController.direction.setX(-1);
-             //ball.RectBounce(1);
-            ball.NormalBounce(QVector3D(-1, 0, 0));
-
+            characterController.direction.setX(-1);           
         }
         else if (GetKeyState('D') < 0) {
-            characterController.direction.setX(1);
-             //ball.RectBounce(3);
-            ball.NormalBounce(QVector3D(1, 0, 0));
-
+            characterController.direction.setX(1);            
         }
 
         if(ball.worldPosition.x() > 10)
@@ -100,7 +90,7 @@ void DisplayManager::paintGL(){
 
         for(Entity obstacle : entitiesManager.rectObstacles) {
 
-            //handle collisions
+            //handle collisions player
             int collisionDirection = collisionManager.IsRectCollidingWithRect(characterController.player.collider, obstacle.collider);
             if(collisionDirection == 0 && characterController.direction.y() < 0)
                 characterController.direction.setY(0);
@@ -113,7 +103,15 @@ void DisplayManager::paintGL(){
 
             //draw
             DrawSquare(obstacle);
+
+            //handle collisions balls
+            int ballCollisionDirection = collisionManager.IsCircleCollidingWithRect(ball.collider, obstacle.collider);
+
+            if(ballCollisionDirection >= 0){
+                ball.RectBounce(ballCollisionDirection);
+            }
         }
+
 
         //apply movements
         characterController.applyMovements();
@@ -128,8 +126,6 @@ void DisplayManager::DrawSquare(Entity entity)
 {
     x = entity.worldPosition.x() + entity.collider.localPt1.x();
     y = entity.worldPosition.y() + entity.collider.localPt1.y();
-
-    //cout << "Je suis vivant" << endl;
 
     glBegin(GL_QUADS);
         glColor3f(entity.color.x(), entity.color.y(), entity.color.z()); // Couleurs

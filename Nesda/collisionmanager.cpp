@@ -57,3 +57,28 @@ int CollisionManager::IsRectCollidingWithRect(Collider collider, Collider other)
     }
     return -1;
 }
+
+int CollisionManager::IsCircleCollidingWithRect(Collider a_circleCollider, Collider a_rectCollider){
+    QVector3D largeWorldPt1 = a_rectCollider.worldPt1 + QVector3D(-a_circleCollider.Radius, -a_circleCollider.Radius, 0);
+    QVector3D largeWorldPt2 = a_rectCollider.worldPt2 + QVector3D(a_circleCollider.Radius, a_circleCollider.Radius, 0);
+
+    if(largeWorldPt1.x() < a_circleCollider.worldPt1.x() && a_circleCollider.worldPt1.x() < largeWorldPt2.x() &&
+       largeWorldPt1.y() < a_circleCollider.worldPt1.y() && a_circleCollider.worldPt1.y() < largeWorldPt2.y())
+    {
+        if(a_circleCollider.worldPt1.x() < a_rectCollider.worldPt1.x()){
+            return 3; // Left
+        }
+        else if(a_circleCollider.worldPt1.x() > a_rectCollider.worldPt2.x()){
+            return 1; // Right
+        }
+        else if (a_circleCollider.worldPt1.y() > a_rectCollider.worldPt1.y()){
+            return 0; // Top
+        }
+        else if (a_circleCollider.worldPt1.y() < a_rectCollider.worldPt2.y()){
+            return 2; // Bottom
+        }
+    }
+    return -1;
+}
+
+//QVector3

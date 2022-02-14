@@ -29,14 +29,25 @@ vector<vector<QVector3D>> Collider::GetSides() {
 }
 
 void Collider::SetWorldPosition(QVector3D worldPosition) {
+
     if(IsCircle){
-        worldPt1 = QVector3D(worldPosition.x(), worldPosition.y() + Radius, 0);
-        worldPt2 = QVector3D(worldPosition.x() + Radius, worldPosition.y(), 0);
-        worldPt3 = QVector3D(worldPosition.x(), worldPosition.y() - Radius, 0);
-        worldPt4 = QVector3D(worldPosition.x() - Radius, worldPosition.y(), 0);
+        worldPt1 = worldPosition;
     }
     else{
         worldPt1 = localPt1 + worldPosition;
         worldPt2 = localPt2 + worldPosition;
     }
+
+//    if(IsCircle){
+//        worldPt1 = QVector3D(worldPosition.x(), worldPosition.y() + Radius, 0);
+//        worldPt2 = QVector3D(worldPosition.x() + Radius, worldPosition.y(), 0);
+//        worldPt3 = QVector3D(worldPosition.x(), worldPosition.y() - Radius, 0);
+//        worldPt4 = QVector3D(worldPosition.x() - Radius, worldPosition.y(), 0);
+//    }
+//    else{
+//        worldPt1 = localPt1 + worldPosition;
+//        worldPt2 = localPt2 + worldPosition;
+//    }
+
+
 }
