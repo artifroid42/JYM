@@ -6,6 +6,9 @@ class DungeonManager
 {
 public:
     DungeonManager();
+
+private :
+
 };
 
 #endif // DUNGEONMANAGER_H

@@ -53,6 +53,7 @@ void DisplayManager::paintGL(){
 
     glTranslatef(0.0, 0.0, _Z);
 
+    DrawMap();
     // Rotation
     //glRotatef(0.f, 90.0f, 0.0, 0.0f);
 
@@ -122,6 +123,8 @@ void DisplayManager::paintGL(){
         //end update loop
         characterController.ResetDirection();
         DrawSquare(characterController.player);
+
+
 }
 
 void DisplayManager::DrawSquare(Entity entity)
@@ -153,6 +156,22 @@ void DisplayManager::DrawCircle(ProjectileBehaviour ball){
    for(float i = 0.0f; i <= 360; i++)
            glVertex2f(radius*cos(M_PI * i / 180.0) + cx, radius*sin(M_PI * i / 180.0) + cy);
    glEnd();
+}
+
+void DisplayManager::DrawMap()
+{
+    x = 0;
+    y = 0;
+
+    //cout << "Je suis vivant" << endl;
+
+    glBegin(GL_QUADS);
+        glColor3f(1, 0, 0); // Couleurs
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+1,0);
+        glVertex3f(x+1,y+1,0);
+        glVertex3f(x+1,y,0);
+        glEnd();
 }
 
 void DisplayManager::resizeGL(int width, int height){

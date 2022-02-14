@@ -22,6 +22,7 @@ SOURCES += \
     gamemanager.cpp \
     main.cpp \
     mainwindow.cpp \
+    mapmanager.cpp \
     player.cpp \
     projectilebehaviour.cpp \
     rectcollider.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     entity.h \
     gamemanager.h \
     mainwindow.h \
+    mapmanager.h \
     player.h \
     projectilebehaviour.h \
     rectcollider.h \
