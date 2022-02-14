@@ -41,7 +41,7 @@ private:
     vector<Entity> v_entity;
     QPoint _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;
-    ProjectileBehaviour ball;
+    ProjectileBehaviour tempBall;
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
 };

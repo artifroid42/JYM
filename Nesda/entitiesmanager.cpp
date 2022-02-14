@@ -1,4 +1,5 @@
 #include "entitiesmanager.h"
+#include <iostream>
 
 EntitiesManager::EntitiesManager(){}
 
@@ -19,3 +20,14 @@ void EntitiesManager::CreateObstacles() {
         rectObstacles.insert(rectObstacles.cend(), wall);
     }
 }
+
+void EntitiesManager::AddBall(ProjectileBehaviour &ball){
+    if(balls.size()>0)
+        cout << balls.begin()->_speed << " " << balls.begin()->worldPosition.y() << endl;
+    balls.insert(balls.cend(), ball);
+}
+
+void EntitiesManager::RemoveBall(){
+
+}
+

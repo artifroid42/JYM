@@ -9,13 +9,13 @@ ProjectileBehaviour::ProjectileBehaviour()
 
 }
 
-ProjectileBehaviour::ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color) : Entity(spawnPos, radius, color)
+ProjectileBehaviour::ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color, QVector3D forward) : Entity(spawnPos, radius, color)
 {
     _speed = speed;
-    SetFoward(QVector3D(-2,5,0));
+    SetForward(forward);
 }
 
-void ProjectileBehaviour::SetFoward(QVector3D forward){
+void ProjectileBehaviour::SetForward(QVector3D forward){
     _forward = forward.normalized();
     //if(_forward.x() != 0 && _forward.y() != 0)
         //_speed *= 0.7;

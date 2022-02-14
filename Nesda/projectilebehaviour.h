@@ -11,8 +11,8 @@ public:
     QVector3D _forward;
 
     ProjectileBehaviour();
-    ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color);
-    void SetFoward(QVector3D);
+    ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color, QVector3D forward);
+    void SetForward(QVector3D);
     void MoveForward();
     void RectBounce(int sideID);
     void NormalBounce(QVector3D normal);
