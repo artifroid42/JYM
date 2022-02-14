@@ -20,9 +20,10 @@ public:
     float Radius;
 
     bool IsColliding(Collider);
-    bool AreSegmentsCrossing(QVector3D, QVector3D, QVector3D, QVector3D);
+    bool AreLinesCrossing(QVector3D, QVector3D, QVector3D, QVector3D);
     vector<vector<QVector3D>> GetSides();
     void SetWorldPosition(QVector3D);
+    int getCollidingDirection(Collider other);
 };
 
 #endif // COLLIDER_H

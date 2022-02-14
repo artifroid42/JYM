@@ -18,8 +18,9 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
     setMouseTracking(true);
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
-    player =  Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0), QVector3D(0, 1, 0));
-    wall =  Entity(QVector3D(2,3,0),QVector3D(0,0,0),QVector3D(2,2,0), QVector3D(1, 0, 0));
+    player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
+    wall = Entity(QVector3D(1,2,0),QVector3D(0,0,0),QVector3D(2,2,0), QVector3D(1, 0, 0));
+    wall.collider.SetWorldPosition(wall.worldPosition);
     characterController = CharacterController(player);
     ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, QVector3D(1, 1, 1));
 }
@@ -88,6 +89,7 @@ void DisplayManager::paintGL(){
     }
 
       DrawSquare(characterController.entity);
+      DrawSquare(wall);
 
       DrawCircle(ball);
 
@@ -106,9 +108,15 @@ void DisplayManager::paintGL(){
         }
 
         //handle collisions
-        if(characterController.entity.collider.IsColliding(wall.collider))
-            cout<<"colliding";
-
+        int collisionDirection = characterController.entity.collider.getCollidingDirection(wall.collider);
+        if(collisionDirection == 0 && characterController.direction.y() < 0)
+            characterController.direction.setY(0);
+        else if(collisionDirection == 2 && characterController.direction.y() > 0)
+            characterController.direction.setY(0);
+        else if(collisionDirection == 1 && characterController.direction.x() < 0.0)
+            characterController.direction.setX(0);
+        else if(collisionDirection == 3 && characterController.direction.x() > 0.0)
+            characterController.direction.setX(0);
         //apply movements
         characterController.applyMovements();
 
@@ -118,13 +126,13 @@ void DisplayManager::paintGL(){
 
 void DisplayManager::DrawSquare(Entity entity)
 {
-    x = entity.worldPosition.x() + entity.collider.localPt2.x();
-    y = entity.worldPosition.y() + entity.collider.localPt2.y();
+    x = entity.worldPosition.x() + entity.collider.localPt1.x();
+    y = entity.worldPosition.y() + entity.collider.localPt1.y();
 
     //cout << "Je suis vivant" << endl;
 
     glBegin(GL_QUADS);
-        glColor3f(entity.color.x(), entity.color.y(), entity.color.z()); // Couleurs
+        glColor3f(0, 0, 1); // Couleurs
         glVertex3f(x,y,0);
         glVertex3f(x,y+entity.collider.localPt2.y(),0);
         glVertex3f(x+entity.collider.localPt2.x(),y+entity.collider.localPt2.y(),0);
