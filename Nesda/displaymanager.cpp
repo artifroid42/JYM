@@ -25,8 +25,9 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
     setMouseTracking(true);
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
-
-    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, 0.01, QVector3D(1, 1, 1));
+    player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
+    characterController = CharacterController(player);
+    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, 0.1, QVector3D(1, 1, 1));
 }
 
 void DisplayManager::initializeGL()
@@ -73,16 +74,27 @@ void DisplayManager::paintGL(){
         else if (GetKeyState('Z') < 0) {
             characterController.direction.setY(1);
              //ball.RectBounce(0);
-             ball.NormalBounce(QVector3D(0, 1, 0));
+            ball.NormalBounce(QVector3D(0, 1, 0));
         }
         if (GetKeyState('Q') < 0) {
             characterController.direction.setX(-1);
              //ball.RectBounce(1);
-             ball.NormalBounce(QVector3D(-1, 0, 0));
+            ball.NormalBounce(QVector3D(-1, 0, 0));
+
         }
         else if (GetKeyState('D') < 0) {
             characterController.direction.setX(1);
              //ball.RectBounce(3);
+            ball.NormalBounce(QVector3D(1, 0, 0));
+
+        }
+
+        if(ball.worldPosition.x() > 10)
+        {
+            ball.NormalBounce(QVector3D(-1, 0, 0));
+        }
+        else if(ball.worldPosition.x() < -10)
+        {
              ball.NormalBounce(QVector3D(1, 0, 0));
         }
 
