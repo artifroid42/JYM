@@ -26,6 +26,7 @@ public:
     void resizeGL(int width, int height);
     void DrawSquare(Entity entity);
     void DrawCircle(ProjectileBehaviour ball);
+    void DrawCircle(Entity entity);
 
 protected:
     // Mouse Management

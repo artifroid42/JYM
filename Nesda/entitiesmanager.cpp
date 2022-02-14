@@ -19,6 +19,15 @@ void EntitiesManager::CreateObstacles() {
         wall.collider.SetWorldPosition(wall.worldPosition);
         rectObstacles.insert(rectObstacles.cend(), wall);
     }
+
+    vector<Entity> circleWalls = vector<Entity>();
+    circleWalls.insert(circleWalls.cend(), Entity(QVector3D(-3,2,0), 1.5, QVector3D(0, 0, 1)));
+    circleWalls.insert(circleWalls.cend(), Entity(QVector3D(-2.5,-0.5,0), 0.35, QVector3D(0, 0, 1)));
+
+    for(Entity circleWall : circleWalls) {
+        circleWall.collider.SetWorldPosition(circleWall.worldPosition);
+        circleObstacles.insert(circleObstacles.cend(), circleWall);
+    }
 }
 
 void EntitiesManager::AddBall(ProjectileBehaviour &ball){
