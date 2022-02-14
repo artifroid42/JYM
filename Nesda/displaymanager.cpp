@@ -27,7 +27,6 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
     player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     characterController = CharacterController(player);
-    tempBall = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.1, 0.1, QVector3D(1, 1, 1), QVector3D(-2,5,0));
 }
 
 void DisplayManager::initializeGL()
@@ -63,20 +62,18 @@ void DisplayManager::paintGL(){
         //DrawCaree(v_entity.at(i));
     }
 
-      DrawCircle(tempBall);
-
         //inputs
         if (GetKeyState('S') < 0) {
-            characterController.direction.setY(-1);        
+            characterController.direction.setY(-1);
         }
         else if (GetKeyState('Z') < 0) {
-            characterController.direction.setY(1);          
+            characterController.direction.setY(1);
         }
         if (GetKeyState('Q') < 0) {
-            characterController.direction.setX(-1);           
+            characterController.direction.setX(-1);
         }
         else if (GetKeyState('D') < 0) {
-            characterController.direction.setX(1);            
+            characterController.direction.setX(1);
         }
 
         for(ProjectileBehaviour& ball : entitiesManager.balls){
@@ -100,17 +97,29 @@ void DisplayManager::paintGL(){
             //draw
             DrawSquare(obstacle);
 
-            //handle collisions balls
-            int ballCollisionDirection = collisionManager.IsCircleCollidingWithRect(tempBall.collider, obstacle.collider);
+            for(ProjectileBehaviour& ball : entitiesManager.balls) {
+                //handle collisions balls
+                int ballCollisionDirection = collisionManager.IsCircleCollidingWithRect(ball.collider, obstacle.collider);
 
-            if(ballCollisionDirection >= 0){
-                tempBall.RectBounce(ballCollisionDirection);
+                if(ballCollisionDirection >= 0){
+                    ball.RectBounce(ballCollisionDirection);
+                }
             }
-        }      
+        }
+        for(ProjectileBehaviour ball : entitiesManager.balls) {
+            for(Entity obstacle : entitiesManager.circleObstacles) {
+                //handle collisions balls
+                QVector3D collisionNormal = collisionManager.IsCircleCollidingWithCircle(ball.collider, obstacle.collider);
+                if(collisionNormal != QVector3D(0, 0, 0)) {
+                    ball.NormalBounce(collisionNormal);
+                }
+            }
+            //draw
+            DrawCircle(ball);
+        }
 
         //apply movements
         characterController.applyMovements();
-        tempBall.MoveForward();
 
         //end update loop
         characterController.ResetDirection();

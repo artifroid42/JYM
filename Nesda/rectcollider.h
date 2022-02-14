@@ -9,7 +9,6 @@ class RectCollider : public Collider
 public:
     RectCollider();
     RectCollider(QVector3D, QVector3D);
-    void SetWorldPosition(QVector3D);
     int getCollidingDirection(Collider other);
 };
 #endif

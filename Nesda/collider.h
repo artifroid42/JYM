@@ -24,8 +24,6 @@ public:
     bool IsCircle = false;
     float Radius;
 
-    vector<vector<QVector3D>> GetSides();
-
     void SetWorldPosition(QVector3D);
 };
 

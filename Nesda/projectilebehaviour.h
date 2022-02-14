@@ -1,7 +1,8 @@
 #ifndef PROJECTILEBEHAVIOUR_H
 #define PROJECTILEBEHAVIOUR_H
 #include <QVector3D>
-#include "Entity.h"
+#include "entity.h"
+#include "circlecollider.h"
 
 
 class ProjectileBehaviour : public Entity
