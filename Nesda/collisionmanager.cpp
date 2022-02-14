@@ -57,3 +57,46 @@ int CollisionManager::IsRectCollidingWithRect(Collider collider, Collider other)
     }
     return -1;
 }
+
+int CollisionManager::IsCircleCollidingWithRect(Collider a_circleCollider, Collider a_rectCollider){
+    QVector3D largeWorldPt1 = a_rectCollider.worldPt1 + QVector3D(-a_circleCollider.Radius, -a_circleCollider.Radius, 0);
+    QVector3D largeWorldPt2 = a_rectCollider.worldPt2 + QVector3D(a_circleCollider.Radius, a_circleCollider.Radius, 0);
+
+    if(largeWorldPt1.x() < a_circleCollider.worldPt1.x() && a_circleCollider.worldPt1.x() < largeWorldPt2.x() &&
+       largeWorldPt1.y() < a_circleCollider.worldPt1.y() && a_circleCollider.worldPt1.y() < largeWorldPt2.y())
+    {
+        if(a_circleCollider.worldPt1.x() < a_rectCollider.worldPt1.x()){
+            return 3; // Left
+        }
+        else if(a_circleCollider.worldPt1.x() > a_rectCollider.worldPt2.x()){
+            return 1; // Right
+        }
+        else if (a_circleCollider.worldPt1.y() > a_rectCollider.worldPt1.y()){
+            return 0; // Top
+        }
+        else if (a_circleCollider.worldPt1.y() < a_rectCollider.worldPt2.y()){
+            return 2; // Bottom
+        }
+    }
+    return -1;
+}
+
+QVector3D CollisionManager::IsCircleCollidingWithCircle(Collider collider, Collider otherCollider) {
+    if(collider.worldPt1.distanceToPoint(otherCollider.worldPt1) <= collider.Radius + otherCollider.Radius) {
+        return (otherCollider.worldPt1-collider.worldPt1).normalized();
+    }
+    return QVector3D(0, 0, 0);
+}
+
+vector<vector<QVector3D>> CollisionManager::GetSides(Collider collider) {
+    vector<QVector3D> side1 = {collider.worldPt1, QVector3D(collider.worldPt2.x(), collider.worldPt1.y(), 0)};
+    vector<QVector3D> side2 = {QVector3D(collider.worldPt2.x(), collider.worldPt1.y(), 0), collider.worldPt2};
+    vector<QVector3D> side3 = {collider.worldPt2, QVector3D(collider.worldPt1.x(), collider.worldPt2.y(), 0)};
+    vector<QVector3D> side4 = {QVector3D(collider.worldPt1.x(), collider.worldPt2.y(), 0), collider.worldPt1};
+
+    vector<vector<QVector3D>> sides;
+    sides.insert(sides.end(), {side1, side2, side3, side4});
+    return sides;
+}
+
+//QVector3

@@ -27,7 +27,6 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
     player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     characterController = CharacterController(player);
-    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, 0.1, QVector3D(1, 1, 1));
 }
 
 void DisplayManager::initializeGL()
@@ -64,44 +63,28 @@ void DisplayManager::paintGL(){
         //DrawCaree(v_entity.at(i));
     }
 
-      DrawCircle(ball);
-
         //inputs
         if (GetKeyState('S') < 0) {
             characterController.direction.setY(-1);
-            //ball.RectBounce(2);
-            ball.NormalBounce(QVector3D(0, -1, 0));
         }
         else if (GetKeyState('Z') < 0) {
             characterController.direction.setY(1);
-             //ball.RectBounce(0);
-            ball.NormalBounce(QVector3D(0, 1, 0));
         }
         if (GetKeyState('Q') < 0) {
             characterController.direction.setX(-1);
-             //ball.RectBounce(1);
-            ball.NormalBounce(QVector3D(-1, 0, 0));
-
         }
         else if (GetKeyState('D') < 0) {
             characterController.direction.setX(1);
-             //ball.RectBounce(3);
-            ball.NormalBounce(QVector3D(1, 0, 0));
-
         }
 
-        if(ball.worldPosition.x() > 10)
-        {
-            ball.NormalBounce(QVector3D(-1, 0, 0));
-        }
-        else if(ball.worldPosition.x() < -10)
-        {
-             ball.NormalBounce(QVector3D(1, 0, 0));
+        for(ProjectileBehaviour& ball : entitiesManager.balls){
+            ball.MoveForward();
+            DrawCircle(ball);
         }
 
         for(Entity obstacle : entitiesManager.rectObstacles) {
 
-            //handle collisions
+            //handle collisions player
             int collisionDirection = collisionManager.IsRectCollidingWithRect(characterController.player.collider, obstacle.collider);
             if(collisionDirection == 0 && characterController.direction.y() < 0)
                 characterController.direction.setY(0);
@@ -114,11 +97,30 @@ void DisplayManager::paintGL(){
 
             //draw
             DrawSquare(obstacle);
+
+            for(ProjectileBehaviour& ball : entitiesManager.balls) {
+                //handle collisions balls
+                int ballCollisionDirection = collisionManager.IsCircleCollidingWithRect(ball.collider, obstacle.collider);
+
+                if(ballCollisionDirection >= 0){
+                    ball.RectBounce(ballCollisionDirection);
+                }
+            }
+        }
+        for(ProjectileBehaviour ball : entitiesManager.balls) {
+            for(Entity obstacle : entitiesManager.circleObstacles) {
+                //handle collisions balls
+                QVector3D collisionNormal = collisionManager.IsCircleCollidingWithCircle(ball.collider, obstacle.collider);
+                if(collisionNormal != QVector3D(0, 0, 0)) {
+                    ball.NormalBounce(collisionNormal);
+                }
+            }
+            //draw
+            DrawCircle(ball);
         }
 
         //apply movements
         characterController.applyMovements();
-        ball.MoveForward();
 
         //end update loop
         characterController.ResetDirection();
@@ -131,8 +133,6 @@ void DisplayManager::DrawSquare(Entity entity)
 {
     x = entity.worldPosition.x() + entity.collider.localPt1.x();
     y = entity.worldPosition.y() + entity.collider.localPt1.y();
-
-    //cout << "Je suis vivant" << endl;
 
     glBegin(GL_QUADS);
         glColor3f(entity.color.x(), entity.color.y(), entity.color.z()); // Couleurs
@@ -191,8 +191,15 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
     cout << "Piou piou" << endl;
     if( event != NULL ) {
         _lastPosMouse = event->pos();
+        _lastPosMouse.setX(_lastPosMouse.x()-470);
+        _lastPosMouse.setY(_lastPosMouse.y()-230);
         // Do stuff
         cout << "pos souris x : " << _lastPosMouse.x() << endl << "pos souris y : " << _lastPosMouse.y() << endl;
+        QVector3D spawnPosition = (characterController.player.collider.worldPt1 + characterController.player.collider.worldPt2) / 2;
+        ProjectileBehaviour ball = ProjectileBehaviour(spawnPosition, 0.1, 0.1, QVector3D(1,1,0),
+                                                       QVector3D(_lastPosMouse.x(),_lastPosMouse.y(),0)-characterController.player.worldPosition)
+                                                       /*QVector3D(-2,5,0))*/;
+        entitiesManager.AddBall(ball);
         updateGL();
     }
 }

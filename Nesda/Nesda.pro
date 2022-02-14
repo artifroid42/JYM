@@ -25,7 +25,6 @@ SOURCES += \
     mapmanager.cpp \
     player.cpp \
     projectilebehaviour.cpp \
-    rectcollider.cpp \
     shooter.cpp
 
 HEADERS += \
@@ -42,7 +41,6 @@ HEADERS += \
     mapmanager.h \
     player.h \
     projectilebehaviour.h \
-    rectcollider.h \
     shooter.h
 
 FORMS += \
