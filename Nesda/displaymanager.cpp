@@ -22,7 +22,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     wall = Entity(QVector3D(1,2,0),QVector3D(0,0,0),QVector3D(2,2,0), QVector3D(1, 0, 0));
     wall.collider.SetWorldPosition(wall.worldPosition);
     characterController = CharacterController(player);
-    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, QVector3D(1, 1, 1));
+    ball = ProjectileBehaviour(/*player.worldPosition*/QVector3D(0,0,0), 0.5, 0.01, QVector3D(1, 1, 1));
 }
 
 void DisplayManager::initializeGL()
@@ -96,15 +96,23 @@ void DisplayManager::paintGL(){
         //inputs
         if (GetKeyState('S') < 0) {
             characterController.direction.setY(-1);
+            //ball.RectBounce(2);
+            ball.NormalBounce(QVector3D(0, -1, 0));
         }
         else if (GetKeyState('Z') < 0) {
             characterController.direction.setY(1);
+             //ball.RectBounce(0);
+             ball.NormalBounce(QVector3D(0, 1, 0));
         }
         if (GetKeyState('Q') < 0) {
             characterController.direction.setX(-1);
+             //ball.RectBounce(1);
+             ball.NormalBounce(QVector3D(-1, 0, 0));
         }
         else if (GetKeyState('D') < 0) {
             characterController.direction.setX(1);
+             //ball.RectBounce(3);
+             ball.NormalBounce(QVector3D(1, 0, 0));
         }
 
         //handle collisions
@@ -119,6 +127,7 @@ void DisplayManager::paintGL(){
             characterController.direction.setX(0);
         //apply movements
         characterController.applyMovements();
+        ball.MoveForward();
 
         //end update loop
         characterController.ResetDirection();
@@ -145,8 +154,8 @@ void DisplayManager::DrawCircle(ProjectileBehaviour ball){
 
    glBegin(GL_TRIANGLE_FAN);
 
-   float cx = /*ball.worldPosition.x()*/0.5;
-   float cy = /*ball.worldPosition.y()*/0.5;
+   float cx = ball.worldPosition.x();
+   float cy = ball.worldPosition.y();
    float radius = ball.collider.Radius;
 
    glVertex2f(cx, cy); // Center

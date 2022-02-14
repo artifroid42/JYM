@@ -9,12 +9,17 @@ class Collider
 {
 public:
     Collider(QVector3D, QVector3D); // Rect
-    Collider(float); //Circle
+    Collider(float radius); //Circle
     Collider();
+
     QVector3D localPt1;
     QVector3D localPt2;
     QVector3D worldPt1;
     QVector3D worldPt2;
+
+    //Circle
+    QVector3D worldPt3;
+    QVector3D worldPt4;
 
     bool IsCircle = false;
     float Radius;
@@ -22,6 +27,7 @@ public:
     bool IsColliding(Collider);
     bool AreLinesCrossing(QVector3D, QVector3D, QVector3D, QVector3D);
     vector<vector<QVector3D>> GetSides();
+
     void SetWorldPosition(QVector3D);
     int getCollidingDirection(Collider other);
 };
