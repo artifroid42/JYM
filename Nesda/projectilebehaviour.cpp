@@ -1,5 +1,7 @@
 #include "projectilebehaviour.h"
 #include <iostream>
+#include <math.h>
+#include <QQuaternion>
 
 ProjectileBehaviour::ProjectileBehaviour()
 {
@@ -47,6 +49,7 @@ void ProjectileBehaviour::RectBounce(int a_sideID){
 }
 
 void ProjectileBehaviour::NormalBounce(QVector3D a_normal){
-    //_forward = _forward + -a_normal.normalized();
-    QVector3D medianPoint =
+//A = acos(AB.AC/(||AB||*||AC||))
+    float teta = acos((QVector3D::dotProduct(_forward, a_normal)) / _forward.length()*a_normal.length());
+    QQuaternion quaternion = QQuaternion(_forward * -1);
 }
