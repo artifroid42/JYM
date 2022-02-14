@@ -13,28 +13,34 @@ LIBS = -lglu32 -lOpengl32
 SOURCES += \
     charactercontroller.cpp \
     collider.cpp \
+    collisionmanager.cpp \
     displaymanager.cpp \
     dungeonmanager.cpp \
     ennemy.cpp \
+    entitiesmanager.cpp \
     entity.cpp \
     gamemanager.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
     projectilebehaviour.cpp \
+    rectcollider.cpp \
     shooter.cpp
 
 HEADERS += \
     charactercontroller.h \
     collider.h \
+    collisionmanager.h \
     displaymanager.h \
     dungeonmanager.h \
     ennemy.h \
+    entitiesmanager.h \
     entity.h \
     gamemanager.h \
     mainwindow.h \
     player.h \
     projectilebehaviour.h \
+    rectcollider.h \
     shooter.h
 
 FORMS += \

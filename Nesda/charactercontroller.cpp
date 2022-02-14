@@ -2,9 +2,9 @@
 
 CharacterController::CharacterController() {}
 
-CharacterController::CharacterController(Entity &_entity)
+CharacterController::CharacterController(Player &_player)
 {
-    entity = _entity;
+    player = _player;
     ResetDirection();
 }
 
@@ -12,8 +12,8 @@ void CharacterController::applyMovements()
 {
     if(direction.x() != 0 && direction.y() != 0)
         direction *= 0.7;
-    entity.worldPosition += direction*speed;
-    entity.collider.SetWorldPosition(entity.worldPosition);
+    player.worldPosition += direction*speed;
+    player.collider.SetWorldPosition(player.worldPosition);
 }
 
 void CharacterController::ResetDirection()

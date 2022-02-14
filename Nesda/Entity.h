@@ -1,6 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
-#include <collider.h>
+#include <rectcollider.h>
 
 class Entity
 {

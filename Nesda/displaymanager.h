@@ -1,3 +1,5 @@
+#ifndef DISPLAYMANAGER_H
+#define DISPLAYMANAGER_H
 #include <QGLWidget>
 #include <QtWidgets>
 #include <QWidget>
@@ -9,9 +11,8 @@
 #include "player.h"
 #include "charactercontroller.h"
 #include "projectilebehaviour.h"
-#ifndef DISPLAYMANAGER_H
-#define DISPLAYMANAGER_H
-
+#include "collisionmanager.h"
+#include "entitiesmanager.h"
 
 class DisplayManager : public QGLWidget
 {
@@ -33,17 +34,16 @@ protected:
     void wheelEvent(QWheelEvent *event);
 
 private:
-
     QTimer _timer; // To update the scene
     float _X, _Y ,_Z; // Translation
     float x;
     float y;
-    Player player;
-    Entity wall;
     vector<Entity> v_entity;
     QPoint _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;
     ProjectileBehaviour ball;
+    CollisionManager collisionManager;
+    EntitiesManager entitiesManager;
 };
 
 #endif // DISPLAYMANAGER_H

@@ -2,18 +2,19 @@
 #define CHARACTERCONTROLLER_H
 #include "QVector3D"
 #include "entity.h"
+#include "player.h"
 
 class CharacterController
 {
 public:
-    CharacterController(Entity &player);
+    CharacterController(Player &player);
     CharacterController();
     ~CharacterController();
     void ResetDirection();
     void applyMovements();
     float speed = 0.1;
     QVector3D direction;
-    Entity entity;
+    Player player;
 private :
 };
 
