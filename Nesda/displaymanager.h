@@ -32,6 +32,7 @@ protected:
     // Mouse Management
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
 
 private:
@@ -39,6 +40,7 @@ private:
     float _X, _Y ,_Z; // Translation
     float x;
     float y;
+    int _IDsRoom;
     vector<Entity> v_entity;
     QPoint _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;

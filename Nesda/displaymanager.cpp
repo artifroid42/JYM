@@ -20,6 +20,8 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     player.collider.SetWorldPosition(player.worldPosition);
     characterController = CharacterController(player);
 
+    _IDsRoom = 0;
+
     // Update the scene
     connect( &_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     _timer.start(16); // Starts or restarts the timer with a timeout interval of 16 milliseconds.
@@ -52,10 +54,10 @@ void DisplayManager::paintGL(){
 
     glTranslatef(0.0, 0.0, _Z);
 
-    DrawMap();
+
     // Rotation
     //glRotatef(0.f, 90.0f, 0.0, 0.0f);
-
+    DrawMap();
 
     for (int i = 0; i < v_entity.size(); i++)
     {
@@ -76,6 +78,11 @@ void DisplayManager::paintGL(){
         else if (GetKeyState('D') < 0) {
             characterController.direction.setX(1);
         }
+        else if (GetKeyState('P') < 0) {
+            _IDsRoom ++;
+            Sleep(1000);
+        }
+
 
         for(ProjectileBehaviour& ball : entitiesManager.balls){
             ball.MoveForward();
@@ -160,18 +167,158 @@ void DisplayManager::DrawCircle(ProjectileBehaviour ball){
 
 void DisplayManager::DrawMap()
 {
-    x = 0;
-    y = 0;
 
-    //cout << "Je suis vivant" << endl;
+//    cout << "Je suis dans draw Map" << endl;
+    vector <int> _doorsopens(4,0);
+    cout << "Id Room Actuel : " << _IDsRoom << endl;
 
-    glBegin(GL_QUADS);
+    //Room 1
+    if(_IDsRoom == 0) // Par rapport à l'ID de la room ca génère les obstacles adéquates //_IDsRoom == 0 && (_doorsopens.at(3) == 1 || _doorsopens.at(0) == 1)
+    {
+        _doorsopens.at(0) = 1;
+        _doorsopens.at(1) = 1;
+        _doorsopens.at(2) = 0;
+        _doorsopens.at(3) = 0;
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(1,2,0);
+        glVertex3f(0,2,0);
+        glVertex3f(1,0,0);
+        glVertex3f(0,0,0);
+        glEnd();
+
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(-2,-4,0);
+        glVertex3f(-1,-4,0);
+        glVertex3f(-2,-3,0);
+        glVertex3f(-1,-3,0);
+        glEnd();
+    }
+
+    cout << "Door opens : " << _doorsopens.at(0) << " & " << _doorsopens.at(1) << endl;
+    //Room2
+    if(_IDsRoom == 1 && (_doorsopens.at(0) == 1 || _doorsopens.at(1) == 1)) // Par rapport à l'ID de la room ca génère les obstacles adéquates
+    {
+        _doorsopens.at(0) = 0;
+        _doorsopens.at(1) = 0;
+        _doorsopens.at(2) = 1;
+        _doorsopens.at(3) = 1;
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(-1,-2,0);
+        glVertex3f(0,-2,0);
+        glVertex3f(-1,0,0);
+        glVertex3f(0,0,0);
+        glEnd();
+
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(2,4,0);
+        glVertex3f(1,4,0);
+        glVertex3f(2,3,0);
+        glVertex3f(1,3,0);
+        glEnd();
+    }
+
+    //Room3
+    if(_IDsRoom == 2) // Par rapport à l'ID de la room ca génère les obstacles adéquates
+    {
+        _doorsopens.at(2) = 1;
+        _doorsopens.at(3) = 1;
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(-1,-2,0);
+        glVertex3f(0,-2,0);
+        glVertex3f(-1,0,0);
+        glVertex3f(0,0,0);
+        glEnd();
+
+    }
+
+    //Room4
+    if(_IDsRoom == 3) // Par rapport à l'ID de la room ca génère les obstacles adéquates
+    {
+        _doorsopens.at(2) = 1;
+        _doorsopens.at(3) = 1;
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(-1,-2,0);
+        glVertex3f(0,-2,0);
+        glVertex3f(-1,0,0);
+        glVertex3f(0,0,0);
+        glEnd();
+
+        glBegin(GL_QUADS);
+        glColor3f(0, 0, 1); // Couleurs
+        glVertex3f(2,4,0);
+        glVertex3f(1,4,0);
+        glVertex3f(2,3,0);
+        glVertex3f(1,3,0);
+        glEnd();
+    }
+
+    // Draw Door
+
+    if (_doorsopens.at(0)==1) // Si la variable de la porte est à 1 on dessine la porte
+    {
+        // Top Door
+        x = 0;
+        y = 3.8;
+        glBegin(GL_QUADS);
         glColor3f(1, 0, 0); // Couleurs
         glVertex3f(x,y,0);
         glVertex3f(x,y+1,0);
         glVertex3f(x+1,y+1,0);
         glVertex3f(x+1,y,0);
         glEnd();
+    }
+   if (_doorsopens.at(1)==1)
+    {
+        // Right Door
+        x = 5;
+        y = 0;
+        glBegin(GL_QUADS);
+        glColor3f(1, 0, 0); // Couleurs
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+1,0);
+        glVertex3f(x+1,y+1,0);
+        glVertex3f(x+1,y,0);
+        glEnd();
+    }
+    if (_doorsopens.at(2)==1)
+    {
+        // Bottom Door
+        x = 0;
+        y = -4.8;
+        glBegin(GL_QUADS);
+        glColor3f(1, 0, 0); // Couleurs
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+1,0);
+        glVertex3f(x+1,y+1,0);
+        glVertex3f(x+1,y,0);
+        glEnd();
+
+
+    }
+    if (_doorsopens.at(3)==1)
+    {
+        // Left Door
+        x = -6;
+        y = 0;
+        glBegin(GL_QUADS);
+        glColor3f(1, 0, 0); // Couleurs
+        glVertex3f(x,y,0);
+        glVertex3f(x,y+1,0);
+        glVertex3f(x+1,y+1,0);
+        glVertex3f(x+1,y,0);
+        glEnd();
+
+    }
+
+
+
+    //glDrawArrays(GL_TRIANGLES, 0, 10);
 }
 
 void DisplayManager::resizeGL(int width, int height){
@@ -204,14 +351,25 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
     }
 }
 
+void DisplayManager::mouseReleaseEvent(QMouseEvent *event)
+{
+
+    int x = event->pos().x();
+    int y = event->pos().y();
+
+    cout << "Mouse Realease x : " << x << endl << "Mouse Release y : " << y << endl;
+}
+
 // Mouse movement management
 void DisplayManager::mouseMoveEvent(QMouseEvent *event)
 {
-    int dx = event->x() - _lastPosMouse.x();
-    int dy = event->y() - _lastPosMouse.y();
+    //int dx = event->x() - _lastPosMouse.x();
+    //int dy = event->y() - _lastPosMouse.y();
 
-//    cout << "Souris qui bouge sur x : " << dx << endl;
-//    cout << "Souris qui bouge sur y : " << dy << endl;
+    int dx = event->pos().x();
+    int dy = event->pos().y();
+  cout << "Souris qui bouge sur x : " << dx << endl;
+  cout << "Souris qui bouge sur y : " << dy << endl;
     if( event != NULL )
     {
         // Do stuff

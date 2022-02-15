@@ -16,6 +16,7 @@ class GameManager
 public:
     GameManager();
     void BoucleDeJeu();
+
 private :
 
 
