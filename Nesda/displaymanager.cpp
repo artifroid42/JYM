@@ -137,10 +137,10 @@ void DisplayManager::paintGL(){
                         newPos = QVector3D(-4.7,-1,0);
                         break;
                     case 2 :
-                        newPos = QVector3D(-1,3,0);
+                        newPos = QVector3D(-1,2.5,0);
                         break;
                     case 3 :
-                        newPos = QVector3D(4.2,-1,0);
+                        newPos = QVector3D(3.7,-1,0);
                         break;
                 }
 
