@@ -14,6 +14,8 @@ using namespace std;
 DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0), _Z(-10)
 {
     timer.start();
+    dungeonManager = DungeonManager();
+    dungeonManager.CreateDungeon(5);
     collisionManager = CollisionManager();
     entitiesManager = EntitiesManager();
     entitiesManager.CreateObstacles();

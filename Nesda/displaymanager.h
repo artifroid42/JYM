@@ -13,6 +13,7 @@
 #include "projectilebehaviour.h"
 #include "collisionmanager.h"
 #include "entitiesmanager.h"
+#include "dungeonmanager.h"
 
 class DisplayManager : public QGLWidget
 {
@@ -46,6 +47,7 @@ private:
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
     QTime timer;
+    DungeonManager dungeonManager;
 };
 
 #endif // DISPLAYMANAGER_H
