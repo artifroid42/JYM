@@ -15,7 +15,8 @@ public:
     vector<int> currentDoorIDs;
     vector<Door> doors;
 
-    QVector2D currentRoomPos(int x, int y);
+    int currentRoomPosX;
+    int currentRoomPosY;
 
     void CreateDoors(); //dungeonManager.GetDoors()
     void GoToNextRoom(int doorID);

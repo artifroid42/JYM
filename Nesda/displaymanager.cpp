@@ -29,6 +29,9 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     entitiesManager.CreateObstacles();
     roomManager = RoomManager();
     roomManager.CreateDoors();
+    roomManager.currentRoomPosX = dungeonManager.startX;
+    roomManager.currentRoomPosY = dungeonManager.startY;
+    roomManager.SetCurrentDoorIDs(dungeonManager.GetDoors(roomManager.currentRoomPosX, roomManager.currentRoomPosY));
     Player player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     player.collider.SetWorldPosition(player.worldPosition);
     characterController = CharacterController(player);
@@ -103,9 +106,48 @@ void DisplayManager::paintGL(){
         characterController.direction.setX(1);
     }
 
+//    if (GetKeyState('E') < 0) {
+//        roomManager.SetCurrentDoorIDs(dungeonManager.GetDoors(roomManager.currentRoomPosX, roomManager.currentRoomPosY));
+//        for(int doorID : dungeonManager.GetDoors(roomManager.currentRoomPosX, roomManager.currentRoomPosY))
+//        {
+//            cout << doorID << endl;
+//        }
+//        cout << roomManager.currentRoomPosX << " " << roomManager.currentRoomPosY << endl;
+//    }
+
     for(ProjectileBehaviour& ball : entitiesManager.balls){
         ball.MoveForward();
         DrawCircle(ball);
+    }
+
+    for(Door& door : roomManager.doors){
+        //std::cout << "Door found " << door.worldPosition.x() << " " << door.worldPosition.y() << endl;
+        if (std::find(roomManager.currentDoorIDs.begin(), roomManager.currentDoorIDs.end(), door.doorID) != roomManager.currentDoorIDs.end()) {
+            DrawSquare(door);
+            if(collisionManager.IsRectCollidingWithRect(door.collider, characterController.player.collider) > -1){
+                std::cout << "Door found" << endl;
+                roomManager.GoToNextRoom(door.doorID);
+                QVector3D newPos;
+                switch(door.doorID){
+                    case 0 :
+                        newPos = QVector3D(-1,-3,0);
+                        break;
+                    case 1 :
+                        newPos = QVector3D(-4.7,-1,0);
+                        break;
+                    case 2 :
+                        newPos = QVector3D(-1,3,0);
+                        break;
+                    case 3 :
+                        newPos = QVector3D(4.2,-1,0);
+                        break;
+                }
+
+                characterController.player.worldPosition = newPos;
+                characterController.player.collider.SetWorldPosition(newPos);
+                roomManager.SetCurrentDoorIDs(dungeonManager.GetDoors(roomManager.currentRoomPosX, roomManager.currentRoomPosY));
+            }
+        }
     }
 
     for(Entity& obstacle : entitiesManager.rectObstacles) {
@@ -159,19 +201,6 @@ void DisplayManager::paintGL(){
         }
 
         DrawCircle(obstacle);
-    }
-
-//    for(Entity& door : entitiesManager.doorsAvailable) {
-//        //draw
-//        DrawSquare(door);
-//    }
-
-    for(Door& door : roomManager.doors){
-        //std::cout << "Door found " << door.worldPosition.x() << " " << door.worldPosition.y() << endl;
-        if (std::find(roomManager.currentDoorIDs.begin(), roomManager.currentDoorIDs.end(), door.doorID) != roomManager.currentDoorIDs.end()) {
-            //std::cout << "Door found" << endl;
-            DrawSquare(door);
-        }
     }
 
 
