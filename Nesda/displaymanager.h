@@ -38,8 +38,8 @@ public:
 protected:
     // Mouse Management
     void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void wheelEvent(QWheelEvent *event);
+    //void mouseMoveEvent(QMouseEvent *event);
+    //void wheelEvent(QWheelEvent *event);
 
 private slots :
     void Cleanup() { m_thread->quit(); }

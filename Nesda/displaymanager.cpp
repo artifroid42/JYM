@@ -40,6 +40,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     connect(thread, &QThread::started, this, &DisplayManager::paintGL);
     this->moveToThread(thread);
     thread->start();
+
      //QMouseEvent *event;
    // QThread *thread = QThread::create(mousePressEvent,event);
 
@@ -238,6 +239,7 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/*
 // Mouse movement management
 void DisplayManager::mouseMoveEvent(QMouseEvent *event)
 {
@@ -262,3 +264,5 @@ void DisplayManager::wheelEvent(QWheelEvent *event) {
       _Z = (numDegrees.x() > 0 || numDegrees.y() > 0) ? _Z + stepZoom : _Z - stepZoom;
     }
 }
+*/
+
