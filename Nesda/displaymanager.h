@@ -45,6 +45,7 @@ private:
     ProjectileBehaviour tempBall;
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
+    QTime timer;
 };
 
 #endif // DISPLAYMANAGER_H

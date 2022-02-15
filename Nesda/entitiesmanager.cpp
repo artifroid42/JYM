@@ -40,3 +40,9 @@ void EntitiesManager::RemoveBall(){
 
 }
 
+void EntitiesManager::checkBallsToDelete(int currentTime) {
+    if(balls.size() == 0) {return;}
+    if(currentTime - balls.begin()->spawnTime >= ballsLifeTime)
+        balls.erase(balls.begin());
+}
+

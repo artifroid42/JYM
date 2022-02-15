@@ -13,6 +13,7 @@ using namespace std;
 
 DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0), _Z(-10)
 {
+    timer.start();
     collisionManager = CollisionManager();
     entitiesManager = EntitiesManager();
     entitiesManager.CreateObstacles();
@@ -43,7 +44,6 @@ void DisplayManager::initializeGL()
 }
 
 void DisplayManager::paintGL(){
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Center the camera
@@ -134,6 +134,8 @@ void DisplayManager::paintGL(){
     //end update loop
     characterController.ResetDirection();
     DrawSquare(characterController.player);
+
+    entitiesManager.checkBallsToDelete(timer.elapsed());
 }
 
 void DisplayManager::DrawSquare(Entity entity)
@@ -203,7 +205,7 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
         cout << "pos souris x : " << _lastPosMouse.x() << endl << "pos souris y : " << _lastPosMouse.y() << endl;
         QVector3D spawnPosition = (characterController.player.collider.worldPt1 + characterController.player.collider.worldPt2) / 2;
         ProjectileBehaviour ball = ProjectileBehaviour(spawnPosition, 0.1, 0.1, QVector3D(1,1,0),
-                                                       QVector3D(_lastPosMouse.x(),_lastPosMouse.y(),0)-characterController.player.worldPosition)
+                                                       QVector3D(_lastPosMouse.x(),_lastPosMouse.y(),0)-characterController.player.worldPosition, timer.elapsed())
                                                        /*QVector3D(-2,5,0))*/;
         entitiesManager.AddBall(ball);
         updateGL();

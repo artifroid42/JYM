@@ -18,6 +18,9 @@ public:
     Entity doorRight;
     Entity doorBottom;
     void CreateObstacles();
+    void checkBallsToDelete(int);
+private:
+    int ballsLifeTime = 3000;
 };
 
 #endif // ENTITIESMANAGER_H
