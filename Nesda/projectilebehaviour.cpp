@@ -61,8 +61,6 @@ void ProjectileBehaviour::NormalBounce(QVector3D a_normal){
         int orientation = (QVector3D::crossProduct(_forward, a_normal).z() > 0) ? 1 : -1;
         float angle = orientation * 2 * teta;
         _forward = QVector3D(cos(angle) * _forward.x() - sin(angle) * _forward.y(), sin(angle) * _forward.x() + cos(angle) * _forward.y(), 0).normalized();
-        cout << "NEW FORWARD: " << _forward.x() << " " << _forward.y() << endl;
-
     }
     else{
         _forward = _forward * -1;

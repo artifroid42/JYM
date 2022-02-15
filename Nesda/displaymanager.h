@@ -13,6 +13,7 @@
 #include "projectilebehaviour.h"
 #include "collisionmanager.h"
 #include "entitiesmanager.h"
+#include "roommanager.h"
 #include "dungeonmanager.h"
 #include "QThread"
 
@@ -29,6 +30,7 @@ public:
     void DrawSquare(Entity entity);
     void DrawCircle(ProjectileBehaviour ball);
     void DrawCircle(Entity entity);
+    void DrawDoors();
 
     ~DisplayManager()
     {
@@ -55,6 +57,7 @@ private:
     ProjectileBehaviour tempBall;
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
+    RoomManager roomManager;
     QTime timer;
     DungeonManager dungeonManager;
     std::unique_ptr<QThread> m_thread;

@@ -23,6 +23,8 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     collisionManager = CollisionManager();
     entitiesManager = EntitiesManager();
     entitiesManager.CreateObstacles();
+    roomManager = RoomManager();
+    roomManager.CreateDoors();
     Player player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     player.collider.SetWorldPosition(player.worldPosition);
     characterController = CharacterController(player);
@@ -153,6 +155,19 @@ void DisplayManager::paintGL(){
         }
 
         DrawCircle(obstacle);
+    }
+
+//    for(Entity& door : entitiesManager.doorsAvailable) {
+//        //draw
+//        DrawSquare(door);
+//    }
+
+    for(Door& door : roomManager.doors){
+        //std::cout << "Door found " << door.worldPosition.x() << " " << door.worldPosition.y() << endl;
+        if (std::find(roomManager.currentDoorIDs.begin(), roomManager.currentDoorIDs.end(), door.doorID) != roomManager.currentDoorIDs.end()) {
+            //std::cout << "Door found" << endl;
+            DrawSquare(door);
+        }
     }
 
 
