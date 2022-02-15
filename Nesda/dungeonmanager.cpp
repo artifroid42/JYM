@@ -137,11 +137,11 @@ vector<int> DungeonManager::GetDoors(int x, int y) {
     vector<int> doors = vector<int>();
     if(y-1 >= 0 && dungeon[y-1][x] > 0)
         doors.insert(doors.cend(), 0);
-    if(x-1 >= 0 && dungeon[y][x+1] > 0)
+    if(x+1 <= dungeonSize-1 && dungeon[y][x+1] > 0)
         doors.insert(doors.cend(), 1);
-    if(y+1 < dungeonSize-1 && dungeon[y+1][x] > 0)
+    if(y+1 <= dungeonSize-1 && dungeon[y+1][x] > 0)
         doors.insert(doors.cend(), 2);
-    if(x+1 < dungeonSize-1 && dungeon[y][x-1] > 0)
+    if(x-1 >= 0 && dungeon[y][x-1] > 0)
         doors.insert(doors.cend(), 3);
     return doors;
 }
