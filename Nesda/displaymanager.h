@@ -50,7 +50,7 @@ private:
     float x;
     float y;
     vector<Entity> v_entity;
-    QPoint _lastPosMouse; // To keep the last position of the mouse
+    QVector3D _lastPosMouse; // To keep the last position of the mouse
     CharacterController characterController;
     ProjectileBehaviour tempBall;
     CollisionManager collisionManager;

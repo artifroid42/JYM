@@ -228,7 +228,7 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
     if( event != NULL ) {
 
         //400x 300y
-        _lastPosMouse = event->pos();
+        _lastPosMouse = QVector3D(event->pos().x(), event->pos().y(), 0);
         _lastPosMouse.setX((_lastPosMouse.x()-400)*0.01372);
         _lastPosMouse.setY((_lastPosMouse.y()-300)*-0.01372);
         // Do stuff
