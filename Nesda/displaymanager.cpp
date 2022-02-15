@@ -8,6 +8,9 @@
 #include "fstream"
 #include "iostream"
 #include "player.h"
+#include <QThread>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -31,6 +34,28 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
 //    v_entity.push_back(Entity(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,2,0)));
     player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
     characterController = CharacterController(player);
+
+    // Thread
+
+    auto *thread = new QThread;
+
+
+    connect(thread, &QThread::started, this, &DisplayManager::paintGL);
+    this->moveToThread(thread);
+    thread->start();
+
+     //QMouseEvent *event;
+   // QThread *thread = QThread::create(mousePressEvent,event);
+
+  //  m_thread.reset(new QThread);
+   // moveToThread(m_thread.get());
+    //connect(m_thread, &QThread::started, this, &DisplayManager::mousePressEvent);
+   // m_thread->start();
+    //QMouseEvent *event;
+
+    //mutex lock;
+   // std::thread t1([&lock]() { mousePressEvent(event); });
+
 }
 
 void DisplayManager::initializeGL()
@@ -217,6 +242,7 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/*
 // Mouse movement management
 void DisplayManager::mouseMoveEvent(QMouseEvent *event)
 {
@@ -241,3 +267,5 @@ void DisplayManager::wheelEvent(QWheelEvent *event) {
       _Z = (numDegrees.x() > 0 || numDegrees.y() > 0) ? _Z + stepZoom : _Z - stepZoom;
     }
 }
+*/
+

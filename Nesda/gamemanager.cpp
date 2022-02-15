@@ -3,7 +3,7 @@
 
 #include "vector"
 using namespace std;
-
+/*
 GameManager::GameManager()
 {
 //    Player player = Player(QVector3D(0, 0, 0), QVector3D(0, 0, 0), QVector3D(3, 3, 0));
@@ -15,4 +15,4 @@ void GameManager::BoucleDeJeu()
 {
 
 }
-
+*/
