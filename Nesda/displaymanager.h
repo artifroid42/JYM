@@ -38,8 +38,7 @@ public:
 protected:
     // Mouse Management
     void mousePressEvent(QMouseEvent *event);
-    //void mouseMoveEvent(QMouseEvent *event);
-    //void wheelEvent(QWheelEvent *event);
+
 
 private slots :
     void Cleanup() { m_thread->quit(); }
@@ -55,8 +54,9 @@ private:
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
     QTime timer;
+
+
     std::unique_ptr<QThread> m_thread;
-    QMouseEvent *event;
 };
 
 #endif // DISPLAYMANAGER_H

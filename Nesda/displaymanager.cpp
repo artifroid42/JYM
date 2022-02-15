@@ -41,18 +41,6 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     this->moveToThread(thread);
     thread->start();
 
-     //QMouseEvent *event;
-   // QThread *thread = QThread::create(mousePressEvent,event);
-
-  //  m_thread.reset(new QThread);
-   // moveToThread(m_thread.get());
-    //connect(m_thread, &QThread::started, this, &DisplayManager::mousePressEvent);
-   // m_thread->start();
-    //QMouseEvent *event;
-
-    //mutex lock;
-   // std::thread t1([&lock]() { mousePressEvent(event); });
-
 }
 
 void DisplayManager::initializeGL()
@@ -229,7 +217,7 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
         _lastPosMouse.setX((_lastPosMouse.x()-400)*0.01372);
         _lastPosMouse.setY((_lastPosMouse.y()-300)*-0.01372);
         // Do stuff
-        cout << "pos souris x : " << _lastPosMouse.x() << endl << "pos souris y : " << _lastPosMouse.y() << endl;
+        cout << "pos souris x : " << event->pos().x() << endl << "pos souris y : " << event->pos().y() << endl;
         QVector3D spawnPosition = (characterController.player.collider.worldPt1 + characterController.player.collider.worldPt2) / 2;
         cout << "pos spawn x : " << spawnPosition.x() << endl << "pos spawn y : " << spawnPosition.y() << endl;
         ProjectileBehaviour ball = ProjectileBehaviour(spawnPosition, 0.1, 0.1, QVector3D(1,1,0),
@@ -238,31 +226,3 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
         updateGL();
     }
 }
-
-/*
-// Mouse movement management
-void DisplayManager::mouseMoveEvent(QMouseEvent *event)
-{
-    int dx = event->x() - _lastPosMouse.x();
-    int dy = event->y() - _lastPosMouse.y();
-
-//    cout << "Souris qui bouge sur x : " << dx << endl;
-//    cout << "Souris qui bouge sur y : " << dy << endl;
-    if( event != NULL )
-    {
-        // Do stuff
-        updateGL();
-    }
-}
-
-// Mouse Management for the zoom (for instance)
-void DisplayManager::wheelEvent(QWheelEvent *event) {
-    QPoint numDegrees = event->angleDelta();
-    double stepZoom = 0.25;
-    if (!numDegrees.isNull())
-    {
-      _Z = (numDegrees.x() > 0 || numDegrees.y() > 0) ? _Z + stepZoom : _Z - stepZoom;
-    }
-}
-*/
-

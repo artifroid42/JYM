@@ -19,7 +19,6 @@ SOURCES += \
     ennemy.cpp \
     entitiesmanager.cpp \
     entity.cpp \
-    gamemanager.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
@@ -35,7 +34,6 @@ HEADERS += \
     ennemy.h \
     entitiesmanager.h \
     entity.h \
-    gamemanager.h \
     mainwindow.h \
     player.h \
     projectilebehaviour.h \
