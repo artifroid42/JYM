@@ -16,6 +16,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     timer.start();
     dungeonManager = DungeonManager();
     dungeonManager.CreateDungeon(5);
+    cout<<dungeonManager.startX<<" "<<dungeonManager.startY<<endl;
     collisionManager = CollisionManager();
     entitiesManager = EntitiesManager();
     entitiesManager.CreateObstacles();

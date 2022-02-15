@@ -9,6 +9,8 @@ class DungeonManager
 {
 public:
     DungeonManager();
+    int startX;
+    int startY;
     void CreateDungeon(int size);
     vector<int> GetDoors(int x, int y);
     vector<vector<int>> dungeon = vector<vector<int>>();

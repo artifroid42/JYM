@@ -22,18 +22,26 @@ void DungeonManager::CreateDungeon(int size) {
     if(randCorner == 0) {
         dungeon[0][0] = 1;
         positions.insert(positions.cend(), vector<int>{0, 0});
+        startX = 0;
+        startY = 0;
     }
     else if(randCorner == 1) {
         dungeon[0][size-1] = 1;
         positions.insert(positions.cend(), vector<int>{size-1, 0});
+        startX = size-1;
+        startY = 0;
     }
     else if(randCorner == 2) {
         dungeon[size-1][0] = 1;
         positions.insert(positions.cend(), vector<int>{0, size-1});
+        startX = 0;
+        startY = size-1;
     }
     else {
         dungeon[size-1][size-1] = 1;
         positions.insert(positions.cend(), vector<int>{size-1, size-1});
+        startX = size-1;
+        startY = size-1;
     }
 
     int corner = RandomInt(0, 3);
