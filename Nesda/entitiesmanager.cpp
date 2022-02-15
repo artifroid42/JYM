@@ -63,3 +63,21 @@ void EntitiesManager::checkBallsToDelete(int currentTime) {
         balls.erase(balls.begin());
 }
 
+void EntitiesManager::SetTarget(Target _target) {
+    target = _target;
+    hasTarget = true;
+}
+
+void EntitiesManager::RemoveTarget() {
+    target;
+    hasTarget = false;
+}
+
+void EntitiesManager::RemoveBall(Entity ball) {
+    for(int i=0; i<balls.size(); i++) {
+        if(balls[i].worldPosition == ball.worldPosition) {
+            balls.erase(balls.begin() + i);
+            return;
+        }
+    }
+}

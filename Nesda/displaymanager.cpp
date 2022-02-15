@@ -27,6 +27,7 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     collisionManager = CollisionManager();
     entitiesManager = EntitiesManager();
     entitiesManager.CreateObstacles();
+    entitiesManager.SetTarget(Target(QVector3D(-1, 2.5, 0), QVector3D(0, 0, 0), QVector3D(1, 1, 0), QVector3D(1, 1, 0)));
     roomManager = RoomManager();
     roomManager.CreateDoors();
     Player player = Player(QVector3D(0,0,0),QVector3D(0,0,0),QVector3D(1,1,0), QVector3D(0, 1, 0));
@@ -181,6 +182,16 @@ void DisplayManager::paintGL(){
     //end update loop
     characterController.ResetDirection();
     DrawSquare(characterController.player);
+
+    if(entitiesManager.hasTarget) {
+        DrawSquare(entitiesManager.target);
+        for(Entity& ball : entitiesManager.balls) {
+            if(collisionManager.IsCircleCollidingWithRect(ball.collider, entitiesManager.target.collider) > -1) {
+                entitiesManager.RemoveBall(ball);
+                entitiesManager.RemoveTarget();
+            }
+        }
+    }
 
     entitiesManager.checkBallsToDelete(timer.elapsed());
 }

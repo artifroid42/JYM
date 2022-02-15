@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "player.h"
 #include "projectilebehaviour.h"
+#include "target.h"
 
 class EntitiesManager
 {
@@ -18,8 +19,13 @@ public:
     Entity doorLeft;
     Entity doorRight;
     Entity doorBottom;
+    Entity target;
     void CreateObstacles();
     void checkBallsToDelete(int);
+    void SetTarget(Target);
+    void RemoveTarget();
+    bool hasTarget = false;
+    void RemoveBall(Entity);
 private:
     int ballsLifeTime = 3000;
 };

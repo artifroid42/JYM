@@ -26,7 +26,8 @@ SOURCES += \
     player.cpp \
     projectilebehaviour.cpp \
     roommanager.cpp \
-    shooter.cpp
+    shooter.cpp \
+    target.cpp
 
 HEADERS += \
     charactercontroller.h \
@@ -43,7 +44,8 @@ HEADERS += \
     player.h \
     projectilebehaviour.h \
     roommanager.h \
-    shooter.h
+    shooter.h \
+    target.h
 
 FORMS += \
     mainwindow.ui
