@@ -13,6 +13,7 @@
 #include "projectilebehaviour.h"
 #include "collisionmanager.h"
 #include "entitiesmanager.h"
+#include "QThread"
 
 class DisplayManager : public QGLWidget
 {
@@ -28,12 +29,20 @@ public:
     void DrawCircle(ProjectileBehaviour ball);
     void DrawCircle(Entity entity);
 
+    ~DisplayManager()
+    {
+      QMetaObject::invokeMethod(this,"Cleanup");
+      m_thread->wait();
+    };
+
 protected:
     // Mouse Management
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
 
+private slots :
+    void Cleanup() { m_thread->quit(); }
 private:
     QTimer _timer; // To update the scene
     float _X, _Y ,_Z; // Translation
@@ -46,6 +55,7 @@ private:
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
     QTime timer;
+    std::unique_ptr<QThread> m_thread;
 };
 
 #endif // DISPLAYMANAGER_H

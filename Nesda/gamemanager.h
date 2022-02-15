@@ -2,6 +2,8 @@
 #include "player.h"
 #include "ennemy.h"
 #include "iostream"
+#include <QObject>
+#include <QThread>
 using namespace std;
 
 #ifndef GAMEMANAGER_H
@@ -9,15 +11,23 @@ using namespace std;
 
 
 
-class GameManager
+class GameManager : public QObject
 {
-
-
+    Q_OBJECT
 public:
-    GameManager();
+    GameManager() {
+        m_thread.reset(new QThread);
+        moveToThread(m_thread.get());
+        m_thread->start();
+    };
+    ~GameManager()
+    {
+      //  QMetaObject::invokeMethod()
+    }
+
     void BoucleDeJeu();
 private :
-
+    std::unique_ptr<QThread> m_thread;
 
 };
 
