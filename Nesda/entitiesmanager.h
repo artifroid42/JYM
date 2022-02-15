@@ -10,6 +10,7 @@ public:
     EntitiesManager();
     vector<Entity> rectObstacles = vector<Entity>();
     vector<Entity> circleObstacles = vector<Entity>();
+    vector<Entity> doorsAvailable = vector<Entity>();
     vector<ProjectileBehaviour> balls = vector<ProjectileBehaviour>();
     void AddBall(ProjectileBehaviour &ball);
     void RemoveBall();

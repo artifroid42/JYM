@@ -13,6 +13,7 @@
 #include "projectilebehaviour.h"
 #include "collisionmanager.h"
 #include "entitiesmanager.h"
+#include "roommanager.h"
 
 class DisplayManager : public QGLWidget
 {
@@ -27,6 +28,7 @@ public:
     void DrawSquare(Entity entity);
     void DrawCircle(ProjectileBehaviour ball);
     void DrawCircle(Entity entity);
+    void DrawDoors();
 
 protected:
     // Mouse Management
@@ -45,6 +47,7 @@ private:
     ProjectileBehaviour tempBall;
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
+    RoomManager roomManager;
 };
 
 #endif // DISPLAYMANAGER_H

@@ -15,6 +15,7 @@ SOURCES += \
     collider.cpp \
     collisionmanager.cpp \
     displaymanager.cpp \
+    door.cpp \
     dungeonmanager.cpp \
     ennemy.cpp \
     entitiesmanager.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
     mainwindow.cpp \
     player.cpp \
     projectilebehaviour.cpp \
+    roommanager.cpp \
     shooter.cpp
 
 HEADERS += \
@@ -31,6 +33,7 @@ HEADERS += \
     collider.h \
     collisionmanager.h \
     displaymanager.h \
+    door.h \
     dungeonmanager.h \
     ennemy.h \
     entitiesmanager.h \
@@ -39,6 +42,7 @@ HEADERS += \
     mainwindow.h \
     player.h \
     projectilebehaviour.h \
+    roommanager.h \
     shooter.h
 
 FORMS += \
