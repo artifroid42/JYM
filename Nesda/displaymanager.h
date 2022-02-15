@@ -14,6 +14,7 @@
 #include "collisionmanager.h"
 #include "entitiesmanager.h"
 #include "roommanager.h"
+#include "dungeonmanager.h"
 
 class DisplayManager : public QGLWidget
 {
@@ -48,6 +49,8 @@ private:
     CollisionManager collisionManager;
     EntitiesManager entitiesManager;
     RoomManager roomManager;
+    QTime timer;
+    DungeonManager dungeonManager;
 };
 
 #endif // DISPLAYMANAGER_H

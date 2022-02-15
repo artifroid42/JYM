@@ -9,10 +9,11 @@ ProjectileBehaviour::ProjectileBehaviour()
 
 }
 
-ProjectileBehaviour::ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color, QVector3D forward) : Entity(spawnPos, radius, color)
+ProjectileBehaviour::ProjectileBehaviour(QVector3D spawnPos, float radius, float speed, QVector3D color, QVector3D forward, int currentTime) : Entity(spawnPos, radius, color)
 {
     _speed = speed;
     SetForward(forward);
+    spawnTime = currentTime;
 }
 
 void ProjectileBehaviour::SetForward(QVector3D forward){

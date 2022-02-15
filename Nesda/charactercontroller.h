@@ -12,7 +12,7 @@ public:
     ~CharacterController();
     void ResetDirection();
     void applyMovements();
-    float speed = 0.1;
+    float speed = 0.096;
     QVector3D direction;
     Player player;
 private :
