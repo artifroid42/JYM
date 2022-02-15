@@ -9,6 +9,8 @@
 #include "iostream"
 #include "player.h"
 #include <QThread>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -31,20 +33,25 @@ DisplayManager::DisplayManager(QWidget *parent) : QGLWidget(parent), _X(0), _Y(0
     characterController = CharacterController(player);
 
     // Thread
-/*
+
     auto *thread = new QThread;
 
 
-    connect(thread, &QThread::started, this, &DisplayManager::mousePressEvent);
+    connect(thread, &QThread::started, this, &DisplayManager::paintGL);
     this->moveToThread(thread);
     thread->start();
      //QMouseEvent *event;
-   // QThread *thread = QThread::create(mousePressEvent,event);*/
+   // QThread *thread = QThread::create(mousePressEvent,event);
 
-    m_thread.reset(new QThread);
-    moveToThread(m_thread.get());
+  //  m_thread.reset(new QThread);
+   // moveToThread(m_thread.get());
     //connect(m_thread, &QThread::started, this, &DisplayManager::mousePressEvent);
-    m_thread->start();
+   // m_thread->start();
+    //QMouseEvent *event;
+
+    //mutex lock;
+   // std::thread t1([&lock]() { mousePressEvent(event); });
+
 }
 
 void DisplayManager::initializeGL()
