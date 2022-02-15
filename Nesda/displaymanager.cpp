@@ -198,13 +198,17 @@ void DisplayManager::mousePressEvent(QMouseEvent *event)
 {
     cout << "Piou piou" << endl;
     if( event != NULL ) {
+
+        //400x 300y
         _lastPosMouse = event->pos();
-        _lastPosMouse.setX(_lastPosMouse.x()-470);
-        _lastPosMouse.setY(_lastPosMouse.y()-230);
+        _lastPosMouse.setX((_lastPosMouse.x()-400)*0.01372);
+        _lastPosMouse.setY((_lastPosMouse.y()-300)*-0.01372);
         // Do stuff
         cout << "pos souris x : " << _lastPosMouse.x() << endl << "pos souris y : " << _lastPosMouse.y() << endl;
         QVector3D spawnPosition = (characterController.player.collider.worldPt1 + characterController.player.collider.worldPt2) / 2;
+        cout << "pos spawn x : " << spawnPosition.x() << endl << "pos spawn y : " << spawnPosition.y() << endl;
         ProjectileBehaviour ball = ProjectileBehaviour(spawnPosition, 0.1, 0.1, QVector3D(1,1,0),
+                                                       QVector3D(_lastPosMouse.x(),_lastPosMouse.y(),0)-spawnPosition)
                                                        QVector3D(_lastPosMouse.x(),_lastPosMouse.y(),0)-characterController.player.worldPosition, timer.elapsed())
                                                        /*QVector3D(-2,5,0))*/;
         entitiesManager.AddBall(ball);
